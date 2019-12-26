@@ -1,0 +1,59 @@
+Lecture 02　MTV架構(1)
+--------------------------------------------------------------------------------
+2.1　MTV概論
+
+1.前、後台互動
+　使用者透過url訪問views，這是他們與後台互動的視覺介面(餐廳菜單)
+　對於user做的各項操作，models扮演(服務生取單)與後台資料庫溝通的管理角色
+　後台資料庫接收指令後(廚師炒菜)，遞交資料給views，供整合templates視覺化呈現(料理盛盤)
+
+2.角色類比
+　(1)點餐: url+views
+     由url負責各網頁的分流作業，詳細事件則由views定義；並交由models啟動後台資料庫之溝通
+　(2)出餐: views+templates   
+     views詳細定義了取需資料與呈現方式(template，即.html檔)，做為資料庫及前台的整合角色
+
+--------------------------------------------------------------------------------
+2.2　創建model
+
+(blog/models.py)
+ from django.db import models
+ from django.utils import timezone
+
+ class Post(models.Model):
+     #參照已創建之superuser，以CASCADE定義參照外來鍵的相依關係
+     author=models.ForeignKey("auth.User", on_delete=models.CASCADE, null=False)
+     title=models.CharField(max_length=200)
+     text=models.TextField()
+
+     #預設為發佈時間(時區需至project/setting.py調整)
+     created_date=models.DateTimeField(
+         default=timezone.now)
+    
+     def publish(self):
+         self.created_date=timezone.now()
+         self.save()
+        
+     def __str__(self):
+         return self.title
+
+--------------------------------------------------------------------------------
+2.3　migration&registration
+
+(terminal)
+ python manage.py makemigrations
+ (將看到blog/migrations多了0001_initial.py，產生一個建資料庫的腳本)
+
+ #執行腳本，建立資料庫
+ python manage.py migrate
+
+(blog/admin.py)
+ from django.contrib import admin
+ #.表示當前資料夾之下
+ from .models import Post
+ admin.site.register(Post)
+
+(terminal) 
+ #啟動server，更改網址127.0.0.1:8000/admin/
+ python manage.py runserver 8000
+ (看到Django administration多了BLOG/Posts，表示測試成功，可於後台新增資料)
