@@ -58,7 +58,6 @@ Lecture 07　文本分頁讀取
      <meta charset="UTF-8">
      <title>Lynn's Page</title>
  </head>
-
  <body>
      <div class="header">
          <h2>{{post.title}}</h2>
@@ -71,25 +70,19 @@ Lecture 07　文本分頁讀取
  </body>
  </html>
 
-
 (terminal)
  #啟動server，更改網址127.0.0.1:8000/blog/<id>
  python manage.py runserver 8000
  (自由輸入<id>數字，若出現單篇post代表post_record.html套用成功)
 
-
 --------------------------------------------------------------------------------
-
 7.3　小結:至此完成前、後端之MTV整合
 
 1.post_list
-
   使用者初接觸頁面，顯示資料庫之所有現存文章；表單文框允許user主動寫入操作
 
 2.add_record
-
   允許使用者新增、寫入內容於資料庫，並重導向回初始頁面(post_list)
 
 3.post_record
-
   允許使用者分頁讀取逐筆資料，仿post_list以動態資料另製一html顯示模板
