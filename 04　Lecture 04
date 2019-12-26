@@ -1,6 +1,5 @@
 Lecture 04　動態化MTV
 --------------------------------------------------------------------------------
-
 4.1　動態化概念
 
 1.models.py:定義Post類別
@@ -36,9 +35,7 @@ Lecture 04　動態化MTV
  </body>
  </html>
 
-
 --------------------------------------------------------------------------------
-
 4.3　views取動態參數
 
 (blog/views.py)
@@ -50,7 +47,6 @@ Lecture 04　動態化MTV
 　　 posts=Post.objects.all().order_by('-created_date')
      #{}負責接收丟入post_list.html中的動態參數
      return render(request, 'blog/post_list.html', {'posts':posts})
-
 
 (terminal)
  #啟動server，更改網址127.0.0.1:8000/blog/
