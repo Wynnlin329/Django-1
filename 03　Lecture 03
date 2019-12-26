@@ -1,0 +1,70 @@
+Lecture 03　MTV架構(2)
+--------------------------------------------------------------------------------
+3.1　url分層管理
+
+(project/urls.py)
+ from django.contrib import admin
+ from django.urls import path, include
+
+ urlpatterns = [
+     #127.0.0.1:8000/admin/:admin登入頁面
+     path('admin/', admin.site.urls),
+     #127.0.0.1:8000/blog/:交由blog.urls管理
+     path('blog/', include('blog.urls'))]
+
+--------------------------------------------------------------------------------
+#自行創建檔案
+(blog/urls.py)
+ from django.urls import path
+ from . import views
+
+ urlpatterns=[
+     #執行view.py之post_list方法
+     path('', views.post_list, name='post_list')]
+     (凡127.0.0.1:8000/blog/之下網址的顯示，均透過post_list來定義)
+
+--------------------------------------------------------------------------------
+3.2　post_list方法
+
+#views,templates即是MTV當中的V,T
+(blog/views.py)
+ from django.shortcuts import render
+
+ def post_list(request):
+     #以request方式，顯示blog/post_list.html檔案內容
+     return render(request, 'blog/post_list.html', {})
+
+--------------------------------------------------------------------------------
+#自行創建路徑、檔案
+(blog/templates/blog/post_list.html)
+ <!DOCTYPE html>
+
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <title>Lynn's Page</title>
+ </head>
+ <body>
+     <div>測試成功就會出現這段話喔！</div>
+ </body>
+ </html>
+
+(terminal)
+ #啟動server，更改網址127.0.0.1:8000/blog/
+ python manage.py runserver 8000
+ (出現<div>標籤之文字，代表post_list.html套用成功)
+
+--------------------------------------------------------------------------------
+3.3　小結
+
+1.點餐:url+views
+  (1)透過url-dispatch，分別在project、app層做了訪問頁面的分流
+  (2)目前使用者還不能與後台互動，但已經搭建並確認models角色能做為資料庫的對話樞紐
+
+2.出餐:views+templates
+  (1)配合views.py函式設定，定義了呈現方式及內容(templates，即.html檔)
+  (2)目前尚未定義動態之資料傳接，但已經確認V, T兩者之整合能做為資料庫及前台的橋樑
+
+3.MTV串聯策略
+  (1)動態化MTV:將嘗試把views、templates搭配動態資料，串接資料庫
+  (2)前端表單整合:於前台加入表單供user操作，確保資料能寫入資料庫，也可被取用呈現
