@@ -2,43 +2,33 @@ Appendix A　SQL-Django語法對照
 --------------------------------------------------------------------------------
 1.新增、修改、刪除
 
- (1)新增
-    insert into blog values(me, "title", "text") / Post.objects.create(author=me, title="title", text="text")
- (2)修改
-    update blog set title="title2" where id=20   / Post.objects.get(id=20).update(title="title2")
- (3)刪除
-　　delete from blog where id=10 　　　　　　　　/ Post.objects.get(id=10).delete()
-
+  (1)新增
+     insert into blog values(me, "title", "text") / Post.objects.create(author=me, title="title", text="text")
+  (2)修改
+     update blog set title="title2" where id=20   / Post.objects.get(id=20).update(title="title2")
+  (3)刪除
+     delete from blog where id=1     　　　　　　  / Post.objects.get(id=1).delete()
 
 --------------------------------------------------------------------------------
-
 2.查詢
 
   (1)基本條件
-
-　　 select * from blog 　　　　　　　　　  / Post.objects.all()
-
+     select * from blog 　　　　　　　　　    / Post.objects.all()
      #結果為單篇時使用get，若為多篇列表則使用filter
-　   select * from blog where id=10         / Post.objects.get(id=10)
-
-　   select * from blog where author="Lynn" / Post.objects.filter(author="Lynn")
-
-　　 #小於:it,ite、大於:gt,gte
+     select * from blog where id=10         / Post.objects.get(id=10)
+     select * from blog where author="Lynn" / Post.objects.filter(author="Lynn")　　
+     #小於:it,ite、大於:gt,gte
      select * from blog where id<=15        / Post.objects.filter(id__lte=15)
 
   (2)進階條件
-
-　　 select * from blog where id in (10,20)         / Post.objects.filter(id__in=[10,20])
-
+     select * from blog where id in (10,20)         / Post.objects.filter(id__in=[10,20])
      #相似比對字符，對應contains(包含)
      select * from blog where title like "%Django%" / Post.objects.filter(title__contains="Django")
 
   (3)其他查詢
-
-　　 #資料排序:負號表示逆序排列
-　　 select * from blog order by created_date desc         / Post.objects.all().order_by("-created_date")
-
-　　 #限定筆數:取值結果加註first/last(不影響前段)
+     #資料排序:負號表示逆序排列
+     select * from blog order by created_date desc         / Post.objects.all().order_by("-created_date")
+     #限定筆數:取值結果加註first/last(不影響前段)
      select * from blog where author="Lynn" limit 1        / Post.objects.filter(author="Lynn").first()
-
+     #彙總函數
      select count(*) from blog where title like "%Django%" / Post.objects.filter(title__contains="Django").count()
