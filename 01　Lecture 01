@@ -1,0 +1,54 @@
+Lecture 01　Django 101
+--------------------------------------------------------------------------------
+1.1　project建置
+
+(terminal)
+ pip install django
+
+ #創建project，並啟動
+ mkdir myproject
+ cd myproject
+
+ #.表示當前路徑
+ django-admin startproject project .
+ (將看到myproject下有manage.py及project資料夾，為專案設定擋)
+
+--------------------------------------------------------------------------------
+ python manage.py migrate
+ (將看到myproject下多了db.sqlite3，為預設資料庫)
+
+ #啟動server，點擊網址127.0.0.1:8000
+ python manage.py runserver 8000
+ (看到火箭圖，表示測試成功。ctrl+c退出測試)
+
+--------------------------------------------------------------------------------
+1.2　app建置
+
+(terminal)
+ python manage.py startapp blog
+ (將看到myproject下多了blog資料夾，這種app層可有多個，確保元件分離、架構分明)
+
+(project/settings.py)
+ #創建app後於設定檔寫入登錄
+ INSTALLED_APPS=(
+ ...
+ 'blog')
+
+--------------------------------------------------------------------------------
+(terminal)
+ #設定user,email,password
+ python manage.py createsuperuser
+
+ #啟動server，更改網址127.0.0.1:8000/admin/
+ python manage.py runserver 8000
+ (輸入user,password，看到Django administration，表示測試成功)
+
+--------------------------------------------------------------------------------
+1.3　小結
+
+1.初步完成基本架構之建設
+　包含執行.py檔、資料庫(db.sqlite3)，以及雙層架構(project層:project+app層:blog)
+
+2.雙層架構之規劃
+  project層:負責url-dispatch(上層)
+  app層:負責MTV(models,views,templates)規劃，及url-dispatch(下層)
