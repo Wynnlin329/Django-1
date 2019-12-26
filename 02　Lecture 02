@@ -22,13 +22,14 @@ Lecture 02　MTV架構(1)
 
  class Post(models.Model):
      #參照已創建之superuser，以CASCADE定義參照外來鍵的相依關係
-     author=models.ForeignKey("auth.User", on_delete=models.CASCADE, null=False)
+     author=models.ForeignKey("auth.User",
+                              on_delete=models.CASCADE,
+                              null=False)
      title=models.CharField(max_length=200)
      text=models.TextField()
 
      #預設為發佈時間(時區需至project/setting.py調整)
-     created_date=models.DateTimeField(
-         default=timezone.now)
+     created_date=models.DateTimeField(default=timezone.now)
     
      def publish(self):
          self.created_date=timezone.now()
