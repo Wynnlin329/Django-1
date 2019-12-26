@@ -1,0 +1,33 @@
+Lecture 10　進階:線上佈署
+--------------------------------------------------------------------------------
+10.1　ngrok
+
+1.官網註冊、登入
+　https://ngrok.com 註冊帳號並完成當入
+
+2.下載並解壓縮ngrok.zip檔
+　首次執行需連結帳戶:輸入ngrok authotoken+金鑰密碼
+
+3.將ngrok.exe檔放至project資料夾之下
+　myproject將多一個.exe檔。[注意]不是其下project或blog資料夾
+
+--------------------------------------------------------------------------------
+10.2　HTTP tunnel
+
+(ngrok.exe)
+ ngrok http 8000
+ (可查看session status，複製Forwarding之網址部分)
+
+(project/settings.py)
+ ...
+ DEBUG=False
+ #新增以下兩行
+ ALLOWED_HOSTS=["(複製之網址部分)"]
+ STATIC_ROOT=os.path.join(BASE_DIR, "static")
+ ...
+
+(terminal)
+ python manage.py collectstatic
+ (若出現xxx static files copied...代表成功收集資源)
+ python manage.py runserver
+ (已成功佈署至線上，測試Forwarding網址是否正常顯示)
